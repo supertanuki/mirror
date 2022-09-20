@@ -10,5 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Download Feed
+        run: |-
+          curl "https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/export/referentiel-general-ecoconception-version-beta.json" | jq . > rgesn/referentiel-general-ecoconception-version-beta.json
+      - name: Commit and push changes
+        run: |-
+          git diff
+          git config user.name "Automated"
+          git diff --quiet || (git add -A && git commit -m "Updated with latest RGESN file")
+          git push
+          
