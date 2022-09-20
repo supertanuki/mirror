@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Download Feed
         run: |-
-          curl "https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/export/referentiel-general-ecoconception-version-beta.json" | jq . > rgesn.json
+          curl "https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/export/referentiel-general-ecoconception-version-beta.json" | jq . > file/rgesn.json
       - name: Commit and push changes
         run: |-
           git config user.name "Automated"
-          git add rgesn.json && git commit -m "Updated with latest RGESN file"
+          git add file/rgesn.json && git commit -m "Updated with latest RGESN file"
           git push
           
