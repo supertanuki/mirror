@@ -19,10 +19,11 @@ jobs:
           echo $RTE_OAUTH_RESULT
           RTE_ACCESS_TOKEN=$(echo $RTE_OAUTH_RESULT | jq -j '.access_token')
           echo $RTE_ACCESS_TOKEN
-          curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" | jq . > file/ecowatt.json
+          curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" > file/ecowatt.json
       - name: Commit and push changes
         run: |-
           git config user.name "Bot"
+          git diff
           git diff --quiet || (git add file/ecowatt.json && git commit -m "Updated with latest Ecowatt file")
           git push
           
