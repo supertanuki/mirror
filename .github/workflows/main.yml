@@ -14,10 +14,11 @@ jobs:
           ref: gh-pages
       - name: Download last RTE EcoWatt feed
         run: |
+          echo $RTE_CREDENTIAL
           RTE_OAUTH_RESULT=$(curl -sLS "https://digital.iservices.rte-france.com/token/oauth/" -H "Authorization: Basic $RTE_CREDENTIAL")
-          echo RTE_OAUTH_RESULT
+          echo $RTE_OAUTH_RESULT
           RTE_ACCESS_TOKEN=$(echo $RTE_OAUTH_RESULT | jq -j '.access_token')
-          echo RTE_ACCESS_TOKEN
+          echo $RTE_ACCESS_TOKEN
           curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" | jq . > file/ecowatt.json
       - name: Commit and push changes
         run: |-
