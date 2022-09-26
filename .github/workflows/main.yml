@@ -12,12 +12,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: gh-pages
-      - name: Download Feed
-        run: |-
-          curl "https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/export/referentiel-general-ecoconception-version-beta.json" | jq . > file/rgesn.json
+      - name: Download last RTE EcoWatt feed
+        run: |
+          RTE_OAUTH_RESULT=$(curl -sLS "https://digital.iservices.rte-france.com/token/oauth/" -H "Authorization: Basic $RTE_CREDENTIAL")
+          RTE_ACCESS_TOKEN=$(echo $RTE_OAUTH_RESULT | jq -j '.access_token')
+          curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" | jq . > file/ecowatt.json
       - name: Commit and push changes
         run: |-
           git config user.name "Bot"
-          git diff --quiet || (git add file/rgesn.json && git commit -m "Updated with latest RGESN file")
+          git diff --quiet || (git add file/ecowatt.json && git commit -m "Updated with latest Ecowatt file")
           git push
           
