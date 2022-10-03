@@ -15,10 +15,8 @@ jobs:
       - name: Download last RTE EcoWatt feed
         run: |
           RTE_OAUTH_RESULT=$(curl -sLS "https://digital.iservices.rte-france.com/token/oauth/" -H "Authorization: Basic ${{ secrets.RTE_CREDENTIAL }}")
-          echo $RTE_OAUTH_RESULT
           RTE_ACCESS_TOKEN=$(echo $RTE_OAUTH_RESULT | jq -j '.access_token')
-          echo $RTE_ACCESS_TOKEN
-          curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" -o file/ecowatt.json
+          curl "https://digital.iservices.rte-france.com/open_api/ecowatt/v4/signals" -H "Authorization: Bearer $RTE_ACCESS_TOKEN" -o ecowatt.json
       - name: Commit and push changes
         run: |-
           git config user.name "Bot"
