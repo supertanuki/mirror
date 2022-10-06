@@ -20,6 +20,6 @@ jobs:
       - name: Commit and push changes
         run: |-
           git config user.name "Bot"
-          commit -am "Updated with latest Ecowatt file"
+          git commit -am "Updated with latest Ecowatt file"
           git push
           
