@@ -1,3 +1,3 @@
 # Mirror
 
-https://raw.githubusercontent.com/noesya/ecogestes-mirror/main/file/ecowatt.json
+https://raw.githubusercontent.com/supertanuki/mirror/main/file/ecowatt.json
